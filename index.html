@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BAPA SITARAM BEAM ERP</title>
+<style>
+:root{--bg:#f1f5fb;--card:#fff;--txt:#1b2a4a;--mut:#667799;--line:#dbe3f0;--band:#0f62e6;--thead:#eef3fb;--total:#d6e6fb;--in:#fff;--acc:#0f62e6;--side:#fff;--ok:#16a34a;--bad:#e5333d}
+body.dark{--bg:#06122b;--card:#0e2146;--txt:#e8eefc;--mut:#8fa6d0;--line:#1f3d70;--band:#1257c9;--thead:#12305f;--total:#0f4a9c;--in:#0a1a3a;--side:#0a1a3a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.35 system-ui,Segoe UI,Roboto,sans-serif;padding-top:env(safe-area-inset-top,0px)}
+header{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{width:42px;height:42px;border-radius:10px;background:var(--acc);display:grid;place-items:center;font-size:24px}
+header h1{margin:0;font-size:22px;color:var(--acc);letter-spacing:.5px;line-height:1}header small{display:block;color:var(--acc);font-weight:700;letter-spacing:2px;font-size:12px}
+.hr{margin-left:auto;display:flex;gap:10px;align-items:center;font-size:12px;color:var(--mut)}
+.datebox{border:1px solid var(--line);border-radius:10px;padding:5px 12px;color:var(--txt);font-weight:600;font-size:13px}.datebox span{display:block;color:var(--mut);font-weight:400;font-size:12px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#f5b400;margin-right:5px}.dot.ok{background:var(--ok)}.dot.bad{background:var(--bad)}
+.layout{display:flex;align-items:flex-start;min-height:calc(100vh - 66px)}
+.side{width:216px;flex:none;background:var(--side);border-right:1px solid var(--line);padding:10px 8px;position:sticky;top:0;align-self:stretch}
+.side button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;color:var(--txt);border:0;border-radius:8px;min-height:44px;padding:0 12px;font-size:15px;cursor:pointer}
+.side button.active{background:var(--acc);color:#fff}.side button span{width:22px;text-align:center}
+main{flex:1;min-width:0;padding:12px}
+section{margin:0}
+.mcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.mcard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;display:grid;grid-template-columns:44px 1fr;gap:2px 8px;font-size:12px;color:var(--mut)}
+.mcard .ic{grid-row:1/3;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:20px}
+.mcard b.n{font-size:17px;color:inherit}.mcard b.v{font-size:19px;color:var(--txt);display:block}.mcard .ft{grid-column:1/-1;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px;margin-top:4px}.mcard .ft b{color:var(--txt);font-size:15px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.band{background:var(--band);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:700;font-size:16px;flex-wrap:wrap}
+.band button,.band input{min-height:34px;font-size:13px}
+.pb{padding:12px}
+.fgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;align-items:end}
+.full{grid-column:1/-1}.rem{grid-column:span 4}
+label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+input,select,textarea{width:100%;min-height:44px;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--in);color:var(--txt);font-size:16px}
+button{min-height:44px;padding:0 16px;border:0;border-radius:8px;background:var(--acc);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+button.alt{background:var(--card);color:var(--acc);border:1px solid var(--acc)}button.sm{min-height:32px;padding:0 10px;font-size:13px}button:disabled{opacity:.5}
+.band button.w{background:#fff;color:var(--acc);border:0}.band input{width:auto;color:#222;background:#fff}
+button.ed{background:var(--acc);min-height:30px;padding:0 12px}button.dl{background:var(--bad);min-height:30px;padding:0 12px}
+.cols{display:grid;grid-template-columns:1fr;gap:12px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:6px 6px;border:1px solid var(--line);text-align:center;white-space:nowrap}th{background:var(--thead);white-space:normal}
+tfoot td{font-weight:700;background:var(--total);font-size:14px}td.mn{font-weight:700}
+.legend2{font-size:12px;color:var(--mut);margin-bottom:6px}.legend2 i{display:inline-block;width:12px;height:12px;margin:0 4px 0 10px;vertical-align:middle}
+.bars2{display:flex;gap:6px;align-items:flex-end;height:190px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:0 6px}
+.g{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;font-size:11px;color:var(--mut)}
+.pair{display:flex;align-items:flex-end;gap:2px;height:calc(100% - 16px);width:100%;justify-content:center}.pair b{display:block;width:40%;max-width:22px;border-radius:3px 3px 0 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:12px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card)}.stat b{font-size:22px;display:block}.stat span{color:var(--mut);font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+h2{margin:0 0 10px;font-size:18px}.meta{color:var(--mut);font-size:13px}
+#banner{display:none;margin-bottom:12px;padding:12px;border-radius:10px;background:#fde8ea;color:#7a1020;border:1px solid var(--bad)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#0f3d24;color:#fff;padding:10px 16px;border-radius:10px;display:none;z-index:5}
+#loading{position:fixed;inset:0;background:rgba(5,12,30,.55);display:none;align-items:center;justify-content:center;z-index:9}
+#loading span{background:var(--card);padding:14px 20px;border-radius:12px;border:1px solid var(--line)}
+@media(min-width:1100px){.cols{grid-template-columns:1fr 1fr 1.15fr}}
+@media(max-width:1000px){.fgrid{grid-template-columns:1fr 1fr}.rem{grid-column:1/-1}}
+@media(max-width:899px){.layout{display:block}.side{width:auto;position:static;display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:6px}.side button{width:auto;white-space:nowrap;flex:none;padding:0 12px}.side button span{width:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">&#127981;</div><div><h1>BAPA SITARAM</h1><small>BEAM PRODUCTION ERP</small></div>
+  <div class="hr"><span><i id="conn-dot" class="dot"></i><span id="conn-text">Connecting...</span></span>
+    <button id="btn-theme" type="button" class="alt sm">Dark / Light</button>
+    <div class="datebox"><span id="hd-day" style="color:var(--txt);font-weight:600;font-size:13px"></span><span id="hd-date"></span></div></div>
+</header>
+<div class="layout">
+<nav class="side">
+  <button id="nav-dashboard" type="button" data-view="dashboard"><span>&#127968;</span>Dashboard</button>
+  <button id="nav-entry" type="button" data-view="entry"><span>&#128221;</span>Production Entry</button>
+  <button id="nav-daily" type="button" data-view="daily"><span>&#128197;</span>Daily Report</button>
+  <button id="nav-monthly" type="button" data-view="monthly"><span>&#128198;</span>Monthly Report</button>
+  <button id="nav-machine" type="button" data-view="machine"><span>&#128202;</span>Machine Wise Report</button>
+  <button id="nav-records" type="button" data-view="records"><span>&#9776;</span>All Records</button>
+  <button id="nav-search" type="button" data-view="search"><span>&#128269;</span>Search Records</button>
+  <button id="nav-edit" type="button" data-view="edit"><span>&#9998;</span>Edit / Delete</button>
+  <button id="nav-export" type="button" data-action="export"><span>&#11015;</span>Export to Excel</button>
+  <button id="nav-settings" type="button" data-view="settings"><span>&#9881;</span>Settings</button>
+</nav>
+<main>
+<div id="banner" role="alert"></div>
+
+<section id="view-dashboard">
+  <div id="mcards" class="mcards"></div>
+  <div class="panel" id="form-panel">
+    <div class="band"><span id="form-title">+ Add Production Entry</span><button id="btn-clear" type="button" class="w sm">Clear Form</button></div>
+    <div class="pb"><div class="fgrid">
+      <div><label for="f-date">Date *</label><input id="f-date" type="date"></div>
+      <div><label for="f-machine">Machine *</label><select id="f-machine"></select></div>
+      <div><label for="f-beam">Beam No. *</label><input id="f-beam" type="text" maxlength="40" autocomplete="off" placeholder="Enter beam number"></div>
+      <div><label for="f-end">End (Tar) *</label><input id="f-end" type="number" inputmode="decimal" step="any" min="0" placeholder="Enter end"></div>
+      <div><label for="f-pano">Pano *</label><input id="f-pano" type="number" inputmode="decimal" step="any" min="0" placeholder="Enter pano"></div>
+      <div><label for="f-mitr">Mitr (Meter) *</label><input id="f-mitr" type="number" inputmode="decimal" step="any" min="0" placeholder="Enter meter"></div>
+      <div><label for="f-pipe">Pipe No. *</label><input id="f-pipe" type="text" maxlength="40" autocomplete="off" placeholder="Enter pipe no."></div>
+      <div><label for="f-weight">Net Weight (Kg) — Auto</label><input id="f-weight" type="number" inputmode="decimal" step="0.001" readonly placeholder="Auto calculated"></div>
+      <div><label for="f-warper">Warper (Optional)</label><input id="f-warper" type="text" maxlength="60" autocomplete="off" placeholder="Enter warper name"></div>
+      <div><label for="f-challan">Challan No. (Optional)</label><input id="f-challan" type="text" maxlength="40" autocomplete="off" placeholder="Enter challan no."></div>
+      <div class="rem"><label for="f-party">Party Name (Optional)</label><input id="f-party" type="text" maxlength="120" placeholder="Enter party name"></div>
+      <div><button id="btn-save" type="button" style="width:100%">Save Entry</button><button id="btn-cancel" type="button" class="alt" style="width:100%;margin-top:6px" hidden>Cancel edit</button></div>
+    </div></div>
+  </div>
+  <div class="cols">
+    <div class="panel"><div class="band" id="tp-title">Today's Production</div><div id="today-body" class="scroll"></div></div>
+    <div class="panel"><div class="band" id="mp-title">Monthly Production</div><div id="month-body" class="scroll"></div></div>
+    <div class="panel"><div class="band"><span>Machine Wise Report</span><input id="mc-month" type="month"></div><div class="pb" id="mc-chart"></div></div>
+  </div>
+  <div class="panel">
+    <div class="band"><span>Recent Production Records</span><span><input id="ds-text" type="search" placeholder="Search beam no., machine, pipe no..."> <button id="btn-dsearch" type="button" class="w sm">Search</button> <button type="button" class="w sm" data-view="records">View All Records</button></span></div>
+    <div class="scroll"><table><thead><tr><th>Srl No.</th><th>Date</th><th>Machine</th><th>Beam No.</th><th>End (Tar)</th><th>Pano</th><th>Mitr (Meter)</th><th>Pipe No.</th><th>Net Weight (Kg)</th><th>Warper</th><th>Challan No.</th><th>Party Name</th><th>Action</th></tr></thead><tbody id="recent-body"></tbody></table></div>
+  </div>
+</section>
+
+<section id="view-daily" hidden>
+  <div class="panel"><div class="band">Daily Report</div><div class="pb">
+    <div class="grid"><div><label for="r-day">Date</label><input id="r-day" type="date"></div></div>
+    <div id="daily-body" class="scroll" style="margin-top:10px"></div>
+    <div class="row"><button id="btn-csv-day" type="button" class="alt">Export day CSV</button></div></div></div>
+</section>
+
+<section id="view-monthly" hidden>
+  <div class="panel"><div class="band">Monthly Report</div><div class="pb">
+    <div class="grid"><div><label for="r-month">Month</label><input id="r-month" type="month"></div></div>
+    <div id="mrep-body" class="scroll" style="margin-top:10px"></div>
+    <div class="row"><button id="btn-csv-month" type="button" class="alt">Export month CSV</button></div></div></div>
+</section>
+
+<section id="view-machine" hidden>
+  <div class="panel"><div class="band">Machine Wise Report</div><div class="pb">
+    <div class="grid"><div class="full"><label for="sp-machine">Machine</label><select id="sp-machine"></select></div>
+    <div><label for="sp-from">From Date</label><input id="sp-from" type="date"></div>
+    <div><label for="sp-to">To Date</label><input id="sp-to" type="date"></div></div>
+    <div class="stats">
+      <div class="stat"><b id="sp-mitr">0</b><span>Total Mitr (Meter)</span></div>
+      <div class="stat"><b id="sp-weight">0</b><span>Net Weight (Kg)</span></div>
+      <div class="stat"><b id="sp-n">0</b><span>Total Entries</span></div>
+      <div class="stat"><b id="sp-avg">0</b><span>Avg Weight / Entry</span></div>
+    </div>
+    <div class="row"><button id="btn-csv-machine" type="button" class="alt">Export CSV</button></div></div></div>
+</section>
+
+<section id="view-records" hidden>
+  <div class="panel"><div class="band">All Records</div><div class="pb">
+    <div class="grid"><div><input id="s-text" type="search" placeholder="Search date, machine, beam no., pipe no..."></div><div><select id="s-machine"></select></div></div>
+    <p id="rec-count" class="meta"></p>
+    <div class="scroll"><table><thead><tr><th>#</th><th>Date</th><th>Machine</th><th>Beam No.</th><th>End (Tar)</th><th>Pano</th><th>Mitr (Meter)</th><th>Pipe No.</th><th>Net Weight (Kg)</th><th>Warper</th><th>Challan No.</th><th>Party Name</th><th>Action</th></tr></thead><tbody id="rec-body"></tbody></table></div>
+    <div class="row"><button id="btn-csv-records" type="button" class="alt">Export CSV</button><button id="btn-refresh" type="button" class="alt">Refresh</button></div></div></div>
+</section>
+
+<section id="view-settings" hidden>
+  <div class="panel"><div class="band">Settings</div><div class="pb">
+    <div class="row" style="margin-top:0"><button id="btn-csv-all" type="button" class="alt">Export to Excel (CSV)</button><button id="btn-backup" type="button" class="alt">Backup Data (CSV)</button></div>
+    <p class="meta">BAPA SITARAM BEAM PRODUCTION ERP &middot; Version 3.0<br>Data is stored in Google Sheet tab ERP_Production_V3. Nothing is deleted except entries you delete here.</p></div></div>
+</section>
+</main>
+</div>
+<div id="toast"></div>
+<div id="loading"><span id="loading-msg">Loading...</span></div>
+
+<script>
+var MACHINES = ['BF1', 'BF2', 'BA3', 'BF4', 'BA5', 'BA6', 'BF7'];
+var COLORS = {BF1:'#1473ff',BF2:'#19a35a',BA3:'#ff7a1a',BF4:'#e5333d',BA5:'#8b3fe0',BA6:'#14a9c4',BF7:'#16408f'};
+var COLS = [['date', 'Production Date'], ['machine', 'Machine'], ['beamNo', 'Beam No.'], ['endTar', 'Ends (Tar)'],
+  ['pano', 'Pano'], ['mitr', 'Mitr (Meter)'], ['pipeNo', 'Pipe No.'], ['netWeight', 'Net Weight (Kg)'], ['warper', 'Warper Name'], ['challanNo', 'Challan No.'], ['partyName', 'Party Name']];
+var ALIAS = {entry: 'dashboard', search: 'records', edit: 'records'};
+var VIEWS = ['dashboard', 'daily', 'monthly', 'machine', 'records', 'settings'];
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var rows = [], editing = null, confirmId = null, confirmTimer = null;
+
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function fmt(n) { return (Math.round(Number(n) * 1000) / 1000).toLocaleString('en-IN'); }
+function dmy(s) { var p = String(s).split('-'); return p.length === 3 ? p[2] + '-' + p[1] + '-' + p[0] : s; }
+function todayStr() { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function monthLabel(ym) { return MONTHS[Number(ym.slice(5)) - 1] + ' ' + ym.slice(0, 4); }
+
+function showView(name) {
+  var real = ALIAS[name] || name;
+  if (VIEWS.indexOf(real) < 0) { real = 'dashboard'; name = 'dashboard'; }
+  VIEWS.forEach(function (v) { $('view-' + v).hidden = (v !== real); });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-view]'), function (b) {
+    if (b.closest('.side')) b.classList.toggle('active', b.getAttribute('data-view') === name);
+  });
+  renderAll();
+  window.scrollTo(0, 0);
+  if (name === 'entry') { $('form-panel').scrollIntoView(); $('f-machine').focus(); }
+  if (name === 'search') $('s-text').focus();
+}
+
+function setConn(ok) { $('conn-dot').className = 'dot ' + (ok ? 'ok' : 'bad'); $('conn-text').textContent = ok ? 'Connected' : 'Not connected'; }
+function showError(msg) { var b = $('banner'); b.textContent = msg; b.style.display = msg ? 'block' : 'none'; }
+function toast(msg) { var t = $('toast'); t.textContent = msg; t.style.display = 'block'; setTimeout(function () { t.style.display = 'none'; }, 2500); }
+function setBusy(on, msg) { $('loading-msg').textContent = msg || 'Loading...'; $('loading').style.display = on ? 'flex' : 'none'; $('btn-save').disabled = on; }
+window.addEventListener('error', function (e) { showError('Screen error: ' + e.message + '. Please refresh the page.'); });
+
+function call(fn, arg) {
+  return new Promise(function (resolve, reject) {
+    if (!window.google || !google.script || !google.script.run) { reject(new Error('Open this page from the Apps Script web app link.')); return; }
+    var r = google.script.run
+      .withSuccessHandler(function (x) { if (x && x.ok) resolve(x.data); else reject(new Error((x && x.error) || 'Unknown server error')); })
+      .withFailureHandler(function (e) { reject(new Error((e && e.message) || String(e))); });
+    if (arg === undefined) r[fn](); else r[fn](arg);
+  });
+}
+
+function loadData(msg) {
+  setBusy(true, msg || 'Loading data...');
+  return call('apiList').then(function (d) { rows = d.rows || []; setBusy(false); showError(''); setConn(true); renderAll(); })
+    .catch(function (e) { setBusy(false); setConn(false); showError('Could not load data: ' + e.message); });
+}
+
+function fillMachines(sel, first) {
+  sel.innerHTML = '<option value="">' + first + '</option>' + MACHINES.map(function (m) { return '<option value="' + m + '">' + m + '</option>'; }).join('');
+}
+
+function readForm() {
+  return { id: editing ? editing.id : '', updatedAt: editing ? editing.updatedAt : '',
+    date: $('f-date').value, machine: $('f-machine').value, beamNo: $('f-beam').value.trim(),
+    endTar: $('f-end').value, pano: $('f-pano').value, mitr: $('f-mitr').value,
+    pipeNo: $('f-pipe').value.trim(), netWeight: $('f-weight').value, partyName: $('f-party').value.trim(),
+    warper: $('f-warper').value.trim(), challanNo: $('f-challan').value.trim() };
+}
+
+function updateWeight() {
+  var ends = Number($('f-end').value), meters = Number($('f-mitr').value);
+  $('f-weight').value = (ends > 0 && meters > 0) ? (Math.round((ends * 21 / 9000000 * meters) * 1000) / 1000).toFixed(3) : '';
+}
+function checkForm(e) {
+  if (!e.date) return 'Please choose Date.';
+  if (MACHINES.indexOf(e.machine) < 0) return 'Please select a Machine.';
+  if (!e.beamNo) return 'Please enter Beam No.';
+  if (!e.pipeNo) return 'Please enter Pipe No.';
+  var nums = [['endTar', 'Ends (Tar)'], ['pano', 'Pano'], ['mitr', 'Mitr (Meter)']];
+  for (var i = 0; i < nums.length; i++) {
+    var n = Number(e[nums[i][0]]);
+    if (e[nums[i][0]] === '' || !isFinite(n) || n <= 0) return nums[i][1] + ' must be a number greater than 0.';
+  }
+  return '';
+}
+
+function resetForm() {
+  editing = null;
+  ['f-beam', 'f-end', 'f-pano', 'f-mitr', 'f-pipe', 'f-weight', 'f-party', 'f-warper', 'f-challan'].forEach(function (id) { $(id).value = ''; });
+  $('f-date').value = todayStr(); $('f-machine').value = '';
+  $('form-title').textContent = '+ Add Production Entry'; $('btn-save').textContent = 'Save Entry'; $('btn-cancel').hidden = true;
+}
+
+function onSave() {
+  var e = readForm(), err = checkForm(e);
+  if (err) { showError(err); return; }
+  showError(''); setBusy(true, 'Saving...');
+  call('apiSave', e).then(function () {
+    var wasEdit = !!editing; resetForm(); toast(wasEdit ? 'Entry updated' : 'Entry saved');
+    return loadData('Refreshing...');
+  }).catch(function (x) { setBusy(false); showError('Save failed: ' + x.message); });
+}
+
+function startEdit(id) {
+  var r = rows.filter(function (x) { return x.id === id; })[0];
+  if (!r) return;
+  editing = r;
+  $('f-date').value = r.date; $('f-machine').value = r.machine; $('f-beam').value = r.beamNo;
+  $('f-end').value = r.endTar; $('f-pano').value = r.pano; $('f-mitr').value = r.mitr;
+  $('f-pipe').value = r.pipeNo; $('f-weight').value = r.netWeight; $('f-party').value = r.partyName || ''; $('f-warper').value = r.warper || ''; $('f-challan').value = r.challanNo || '';
+  $('form-title').textContent = 'Edit Production Entry'; $('btn-save').textContent = 'Update Entry'; $('btn-cancel').hidden = false;
+  showView('dashboard'); $('form-panel').scrollIntoView();
+}
+
+function onDelete(id) {
+  if (confirmId !== id) {
+    confirmId = id; renderRecords();
+    clearTimeout(confirmTimer); confirmTimer = setTimeout(function () { confirmId = null; renderRecords(); }, 4000);
+    return;
+  }
+  confirmId = null; setBusy(true, 'Deleting...');
+  call('apiDelete', id).then(function () { toast('Entry deleted'); return loadData('Refreshing...'); })
+    .catch(function (x) { setBusy(false); showError('Delete failed: ' + x.message); });
+}
+
+function match(r, q) { return !q || [r.date, dmy(r.date), r.machine, r.beamNo, r.pipeNo, r.warper, r.challanNo, r.partyName].join(' ').toLowerCase().indexOf(q.toLowerCase()) >= 0; }
+function filtered() {
+  var q = $('s-text').value.trim(), m = $('s-machine').value;
+  return rows.filter(function (r) { return (!m || r.machine === m) && match(r, q); });
+}
+
+function recRows(list) {
+  return list.map(function (r, i) {
+    return '<tr><td>' + (i + 1) + '</td><td>' + dmy(r.date) + '</td><td class="mn" style="color:' + COLORS[r.machine] + '">' + esc(r.machine) + '</td><td>' + esc(r.beamNo) +
+      '</td><td>' + fmt(r.endTar) + '</td><td>' + fmt(r.pano) + '</td><td>' + fmt(r.mitr) + '</td><td>' + esc(r.pipeNo) + '</td><td>' + fmt(r.netWeight) +
+      '</td><td>' + (esc(r.warper) || '-') + '</td><td>' + (esc(r.challanNo) || '-') + '</td><td>' + (esc(r.partyName) || '-') + '</td><td><button type="button" class="ed" data-edit="' + esc(r.id) + '" title="Edit">&#9998;</button> ' +
+      '<button type="button" class="dl" data-del="' + esc(r.id) + '" title="Delete">' + (confirmId === r.id ? 'Sure?' : '&#128465;') + '</button></td></tr>';
+  }).join('') || '<tr><td colspan="13">No records found.</td></tr>';
+}
+
+function renderRecords() {
+  var list = filtered();
+  $('rec-count').textContent = list.length + ' of ' + rows.length + ' entries';
+  $('rec-body').innerHTML = recRows(list);
+  $('recent-body').innerHTML = recRows(rows.filter(function (r) { return match(r, $('ds-text').value.trim()); }).slice(0, 5));
+}
+
+function sums(list) {
+  var t = {}, all = { n: 0, mitr: 0, w: 0 };
+  MACHINES.forEach(function (m) { t[m] = { n: 0, mitr: 0, w: 0 }; });
+  list.forEach(function (r) {
+    var x = t[r.machine]; if (!x) return;
+    x.n++; x.mitr += r.mitr; x.w += r.netWeight; all.n++; all.mitr += r.mitr; all.w += r.netWeight;
+  });
+  return { t: t, all: all };
+}
+
+function summaryTable(list) {
+  var s = sums(list);
+  return '<table><thead><tr><th>Machine</th><th>Entries</th><th>Total Meter</th><th>Net Weight (Kg)</th></tr></thead><tbody>' +
+    MACHINES.map(function (m) { return '<tr><td style="color:' + COLORS[m] + '" class="mn">' + m + '</td><td>' + s.t[m].n + '</td><td>' + fmt(s.t[m].mitr) + '</td><td>' + fmt(s.t[m].w) + '</td></tr>'; }).join('') +
+    '</tbody><tfoot><tr><td>Total</td><td>' + s.all.n + '</td><td>' + fmt(s.all.mitr) + '</td><td>' + fmt(s.all.w) + '</td></tr></tfoot></table>';
+}
+
+function chart(list) {
+  var s = sums(list), mx = 0, wx = 0;
+  MACHINES.forEach(function (m) { mx = Math.max(mx, s.t[m].mitr); wx = Math.max(wx, s.t[m].w); });
+  function h(v, max) { return max ? Math.max(1, Math.round(v / max * 100)) : 1; }
+  return '<div class="legend2"><i style="background:#0f62e6"></i>Total Meter<i style="background:#9cc4ff"></i>Net Weight (Kg)</div><div class="bars2">' +
+    MACHINES.map(function (m) {
+      return '<div class="g"><div class="pair"><b style="height:' + h(s.t[m].mitr, mx) + '%;background:#0f62e6" title="Meter ' + fmt(s.t[m].mitr) + '"></b><b style="height:' + h(s.t[m].w, wx) + '%;background:#9cc4ff" title="Weight ' + fmt(s.t[m].w) + '"></b></div>' + m + '</div>';
+    }).join('') + '</div><p class="meta">Each series is scaled to its own highest value. Max meter ' + fmt(mx) + ' &middot; Max weight ' + fmt(wx) + '</p>';
+}
+
+function dayRows() { var d = $('r-day').value; return rows.filter(function (r) { return d && r.date === d; }); }
+function monthRows() { var mo = $('r-month').value; return rows.filter(function (r) { return mo && r.date.slice(0, 7) === mo; }); }
+function machineRows() {
+  var m = $('sp-machine').value, f = $('sp-from').value, t = $('sp-to').value;
+  return rows.filter(function (r) { return (!m || r.machine === m) && (!f || r.date >= f) && (!t || r.date <= t); });
+}
+
+function renderCards() {
+  var td = todayStr(), s = sums(rows.filter(function (r) { return r.date === td; }));
+  $('mcards').innerHTML = MACHINES.map(function (m) {
+    return '<div class="mcard"><div class="ic" style="background:' + COLORS[m] + '">&#9881;</div><div><b class="n" style="color:' + COLORS[m] + '">' + m + '</b><br>Today Meter<b class="v">' + fmt(s.t[m].mitr) + '</b></div>' +
+      '<div style="grid-column:1/-1">Net Weight (Kg)<b class="v">' + fmt(s.t[m].w) + '</b></div><div class="ft">Entries <b>' + s.t[m].n + '</b></div></div>';
+  }).join('');
+}
+
+function renderAll() {
+  var td = todayStr();
+  renderCards(); renderRecords();
+  $('tp-title').textContent = "Today's Production (" + dmy(td) + ')';
+  $('today-body').innerHTML = summaryTable(rows.filter(function (r) { return r.date === td; }));
+  $('mp-title').textContent = 'Monthly Production (' + monthLabel(td.slice(0, 7)) + ')';
+  $('month-body').innerHTML = summaryTable(rows.filter(function (r) { return r.date.slice(0, 7) === td.slice(0, 7); }));
+  var mc = $('mc-month').value;
+  $('mc-chart').innerHTML = chart(rows.filter(function (r) { return mc && r.date.slice(0, 7) === mc; }));
+  $('daily-body').innerHTML = summaryTable(dayRows());
+  $('mrep-body').innerHTML = summaryTable(monthRows());
+  var l = machineRows(), n = l.length, w = 0, mt = 0;
+  l.forEach(function (r) { w += r.netWeight; mt += r.mitr; });
+  $('sp-mitr').textContent = fmt(mt); $('sp-weight').textContent = fmt(w); $('sp-n').textContent = n; $('sp-avg').textContent = n ? fmt(w / n) : '0';
+}
+
+function exportCsv(list, name) {
+  if (!list.length) { showError('Nothing to export.'); return; }
+  function cell(v) { var s = String(v == null ? '' : v); if (/^[=+\-@]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; }
+  var lines = [COLS.map(function (c) { return cell(c[1]); }).join(',')];
+  list.forEach(function (r) { lines.push(COLS.map(function (c) { return cell(r[c[0]]); }).join(',')); });
+  var blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+function setTheme(dark) {
+  document.body.classList.toggle('dark', dark);
+  try { localStorage.setItem('erpTheme', dark ? 'dark' : 'light'); } catch (e) { /* storage may be blocked */ }
+}
+
+function rowClick(ev) {
+  var b = ev.target.closest('button'); if (!b) return;
+  if (b.hasAttribute('data-edit')) startEdit(b.getAttribute('data-edit'));
+  else if (b.hasAttribute('data-del')) onDelete(b.getAttribute('data-del'));
+}
+
+function init() {
+  var dark = false; try { dark = localStorage.getItem('erpTheme') === 'dark'; } catch (e) { /* ignore */ }
+  setTheme(dark);
+  fillMachines($('f-machine'), 'Select'); fillMachines($('s-machine'), 'All machines'); fillMachines($('sp-machine'), 'All machines');
+  var t = todayStr(), d = new Date();
+  $('f-date').value = t; $('r-day').value = t; $('r-month').value = t.slice(0, 7); $('mc-month').value = t.slice(0, 7);
+  $('sp-from').value = t.slice(0, 8) + '01'; $('sp-to').value = t;
+  $('hd-day').textContent = d.toLocaleDateString('en-GB', { weekday: 'long' });
+  $('hd-date').textContent = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-view]'), function (b) {
+    b.addEventListener('click', function () { showView(b.getAttribute('data-view')); });
+  });
+  $('nav-export').addEventListener('click', function () { exportCsv(rows, 'production_all.csv'); });
+  $('btn-theme').addEventListener('click', function () { setTheme(!document.body.classList.contains('dark')); });
+  $('btn-save').addEventListener('click', onSave);
+  $('btn-clear').addEventListener('click', function () { resetForm(); showError(''); });
+  $('btn-cancel').addEventListener('click', function () { resetForm(); showError(''); });
+  $('btn-refresh').addEventListener('click', function () { loadData('Refreshing...'); });
+  $('btn-dsearch').addEventListener('click', function () { $('s-text').value = $('ds-text').value; showView('search'); });
+  ['f-end','f-mitr'].forEach(function(id){ $(id).addEventListener('input', updateWeight); });
+  ['r-day', 'r-month', 'mc-month', 'sp-machine', 'sp-from', 'sp-to', 's-machine'].forEach(function (id) { $(id).addEventListener('change', renderAll); });
+  $('s-text').addEventListener('input', renderRecords); $('ds-text').addEventListener('input', renderRecords);
+  $('btn-csv-records').addEventListener('click', function () { exportCsv(filtered(), 'production_records.csv'); });
+  $('btn-csv-day').addEventListener('click', function () { exportCsv(dayRows(), 'production_' + $('r-day').value + '.csv'); });
+  $('btn-csv-month').addEventListener('click', function () { exportCsv(monthRows(), 'production_' + $('r-month').value + '.csv'); });
+  $('btn-csv-machine').addEventListener('click', function () { exportCsv(machineRows(), 'production_machine_report.csv'); });
+  $('btn-csv-all').addEventListener('click', function () { exportCsv(rows, 'production_all.csv'); });
+  $('btn-backup').addEventListener('click', function () { exportCsv(rows, 'production_backup_' + todayStr() + '.csv'); });
+  $('rec-body').addEventListener('click', rowClick); $('recent-body').addEventListener('click', rowClick);
+  showView('dashboard');
+  loadData();
+}
+init();
+</script>
+</body>
+</html>
